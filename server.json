@@ -1,0 +1,8 @@
+{
+    "name":"swaggerTest",
+    "web":{
+        "rewrites":{
+            "enable":true
+        }
+    }
+}

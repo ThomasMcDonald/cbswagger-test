@@ -1,0 +1,24 @@
+{
+    "200": {
+        "description": "A welcome message",
+        "content": {
+            "application/json": {
+                "schema": {          
+                    "allOf": [
+                        {
+                            "$ref":  "#/components/schemas/BaseResponse"
+                        },
+                        {
+                            "type": "object",
+                            "properties": {
+                                "data": {
+                                    "$ref":  "#/components/schemas/User"
+                                }
+                            }
+                        }
+                    ]
+				}
+            }
+        }
+    }
+}
