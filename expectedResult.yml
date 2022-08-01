@@ -1,0 +1,400 @@
+openapi: 3.0.2
+info:
+  contact:
+    url: https://www.swagger.io/support
+    name: API Support
+    email: info@ortussolutions.com
+  termsOfService: ''
+  version: 1.0.0
+  license:
+    url: https://www.apache.org/licenses/LICENSE-2.0.html
+    name: Apache 2.0
+  title: ColdBox REST Template
+  description: This API produces amazing results and data.
+servers:
+  - url: https://mysite.com/v1
+    description: The main production server
+  - url: http://127.0.0.1:60299
+    description: The dev server
+paths:
+  /api/echo:
+    get:
+      summary: Say Hello
+      tags: []
+      description: Say Hello
+      operationId: ''
+      parameters: []
+      responses:
+        default:
+          description: A welcome message
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/BaseResponse'
+                  - type: object
+                    properties:
+                      data:
+                        $ref: '#/components/schemas/User'
+        x-resourceId: a9f0a3a63fe6b5bd954760c6ac09e85c
+      externalDocs:
+        url: ''
+        x-resourceId: fe95dd9bc2c364412427feafb0fe4745
+        description: ''
+      x-coldbox-operation: Echo.index
+      x-route: (GET) /api/echo
+      x-resourceId: 7053e9a2dcfacb927792f2e9f5c20794
+    x-resourceId: ec5b0b18c503a3e700309d9772c47730
+  /api/login:
+    post:
+      summary: Login a user into the application
+      tags: []
+      description: Login a user into the application
+      operationId: ''
+      parameters: []
+      responses:
+        '401':
+          description: Validation exception
+          content:
+            application/json:
+              example:
+                $ref: example.401.json
+              schema:
+                type: object
+                properties:
+                  error:
+                    description: Flag to indicate an error.
+                    type: boolean
+                  messages:
+                    description: An array of messages related to the request.
+                    type: array
+                    items:
+                      type: string
+                  pagination:
+                    description: Pagination information.
+                    type: object
+                    properties: {}
+                  data:
+                    description: The validation data packet
+                    type: object
+                    properties:
+                      '{invalidField}':
+                        $ref: ../../_schemas/app-validation.json
+        default:
+          description: Application registration successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    description: Flag to indicate an error.
+                    type: boolean
+                  messages:
+                    description: An array of messages related to the request.
+                    type: array
+                    items:
+                      type: string
+                  pagination:
+                    description: Pagination information.
+                    type: object
+                    properties: {}
+                  data:
+                    description: The data packet of the registration
+                    type: object
+                    properties:
+                      token:
+                        type: string
+                        description: The beaerer token created for the registration
+                      user:
+                        $ref: ../../_schemas/app-user.json
+              example:
+                $ref: example.200.json
+        x-resourceId: a9f0a3a63fe6b5bd954760c6ac09e85c
+      externalDocs:
+        url: ''
+        x-resourceId: fe95dd9bc2c364412427feafb0fe4745
+        description: ''
+      x-coldbox-operation: Auth.login
+      x-route: (POST) /api/login
+      requestBody:
+        description: Needed fields to login a user
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - email
+                - password
+              properties:
+                email:
+                  description: The email to use for login in
+                  type: string
+                password:
+                  description: The password to use for login in
+                  type: string
+              example:
+                email: user@email.org
+                password: test
+        x-resourceId: 1be38aa366c4b7daef5e4b527902a97b
+      x-resourceId: ef07f7b23d3e345b5832856cf2ba8fb2
+    x-resourceId: bb7ab01920e668a383ff6ee4a01dcf2f
+  /api/logout:
+    post:
+      summary: Logout a user
+      tags: []
+      description: Logout a user
+      operationId: ''
+      parameters: []
+      responses:
+        '500':
+          description: Invalid token or expired token or no token
+          content:
+            application/json:
+              example:
+                $ref: example.500.json
+              schema:
+                $ref: ../../_schemas/app-response.json
+        default:
+          description: Authenticate in the application
+          content:
+            application/json:
+              schema:
+                $ref: ../../_schemas/app-response.json
+              example:
+                $ref: example.200.json
+        x-resourceId: a9f0a3a63fe6b5bd954760c6ac09e85c
+      externalDocs:
+        url: ''
+        x-resourceId: fe95dd9bc2c364412427feafb0fe4745
+        description: ''
+      x-coldbox-operation: Auth.logout
+      security:
+        - bearerAuth: []
+        - ApiKeyAuth: []
+      x-route: (POST) /api/logout
+      x-resourceId: 376d5c7277cc16b34cb88b2eef819fe9
+    x-resourceId: 8f0fb362eebe1f36735a9aff4c65b386
+  /api/register:
+    post:
+      summary: Register a new user in the system
+      tags: []
+      description: Register a new user in the system
+      operationId: ''
+      parameters: []
+      responses:
+        '400':
+          description: Invalid or Missing Authentication Credentials
+          content:
+            application/json:
+              example:
+                $ref: example.400.json
+              schema:
+                type: object
+                properties:
+                  error:
+                    description: Flag to indicate an error.
+                    type: boolean
+                  messages:
+                    description: An array of messages related to the request.
+                    type: array
+                    items:
+                      type: string
+                  pagination:
+                    description: Pagination information.
+                    type: object
+                    properties: {}
+                  data:
+                    description: The data packet
+                    type: object
+                    properties: {}
+        default:
+          description: Authenticate in the application
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    description: Flag to indicate an error.
+                    type: boolean
+                  messages:
+                    description: An array of messages related to the request.
+                    type: array
+                    items:
+                      type: string
+                  pagination:
+                    description: Pagination information.
+                    type: object
+                    properties: {}
+                  data:
+                    description: The bearer token created for the user
+                    type: string
+              example:
+                $ref: example.200.json
+        x-resourceId: a9f0a3a63fe6b5bd954760c6ac09e85c
+      externalDocs:
+        url: ''
+        x-resourceId: fe95dd9bc2c364412427feafb0fe4745
+        description: ''
+      x-coldbox-operation: Auth.register
+      x-route: (POST) /api/register
+      requestBody:
+        description: Needed fields to register a user
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - fname
+                - lname
+                - email
+                - password
+              properties:
+                fname:
+                  description: The user's first name
+                  type: string
+                lname:
+                  description: The user's last name
+                  type: string
+                email:
+                  description: The email to use for login in
+                  type: string
+                password:
+                  description: The password to use for login in
+                  type: string
+              example:
+                fname: luis
+                lname: majano
+                email: user@email.org
+                password: test
+        x-resourceId: 1be38aa366c4b7daef5e4b527902a97b
+      x-resourceId: db39905c8c4bb994612194559fdb0da4
+    x-resourceId: 3874c7c7fd9dd7c5140bf61c64d8ed33
+  /api/whoami:
+    get:
+      summary: A secured route that shows you your information
+      tags: []
+      description: A secured route that shows you your information
+      operationId: ''
+      parameters: []
+      responses:
+        '401':
+          description: Invalid or Missing Authentication Credentials
+          content:
+            application/json:
+              example:
+                $ref: example.401.json
+              schema:
+                type: object
+                properties:
+                  error:
+                    description: Flag to indicate an error.
+                    type: boolean
+                  messages:
+                    description: An array of messages related to the request.
+                    type: array
+                    items:
+                      type: string
+                  pagination:
+                    description: Pagination information.
+                    type: object
+                    properties: {}
+                  data:
+                    description: The data packet
+                    type: object
+                    properties: {}
+        default:
+          description: Returns the logged in user information
+          content:
+            application/json:
+              example:
+                $ref: example.200.json
+              schema:
+                type: object
+                properties:
+                  error:
+                    description: Flag to indicate an error.
+                    type: boolean
+                  messages:
+                    description: An array of messages related to the request.
+                    type: array
+                    items:
+                      type: string
+                  pagination:
+                    description: Pagination information.
+                    type: object
+                    properties: {}
+                  data:
+                    $ref: ../../_schemas/app-user.json
+        x-resourceId: a9f0a3a63fe6b5bd954760c6ac09e85c
+      externalDocs:
+        url: ''
+        x-resourceId: fe95dd9bc2c364412427feafb0fe4745
+        description: ''
+      x-coldbox-operation: Echo.whoami
+      security:
+        - bearerAuth: []
+        - ApiKeyAuth: []
+      x-route: (GET) /api/whoami
+      x-resourceId: 8a6eeff65a7d8c98ec4343d9892fc503
+    x-resourceId: 2f5ef9c9a9cf239cb05e12acd9a6f693
+components:
+  schemas:
+    BaseResponse:
+      type: object
+      properties:
+        error:
+          description: Flag to indicate an error.
+          type: boolean
+        messages:
+          description: An array of messages related to the request.
+          type: array
+          items:
+            type: string
+        pagination:
+          description: Pagination information.
+          type: object
+          properties: {}
+        data:
+          description: The data packet
+          type: object
+          properties: {}
+    User:
+      description: The user that is logged in
+      type: object
+      properties:
+        id:
+          description: The User ID
+          type: integer
+        fname:
+          description: The user's first name
+          type: string
+        lname:
+          description: The user's last name
+          type: integer
+        email:
+          description: The user's email
+          type: string
+        permissions:
+          description: The collection of permissions
+          type: array
+          items:
+            type: string
+  securitySchemes:
+    ApiKeyAuth:
+      in: header
+      name: x-api-key
+      type: apiKey
+      description: User your JWT as an Api Key for security
+    bearerAuth:
+      scheme: bearer
+      bearerFormat: JWT
+      type: http
+security: []
+tags: []
+externalDocs:
+  url: https://blog.readme.io/an-example-filled-guide-to-swagger-3-2/
+  description: Find more info here
